@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", Georgia, Cambria, "Times New Roman", serif;
+  --font-mono: "DM Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* ── DRAGON SOURCING PALETTE ── */
+  --color-gold:        #1a56db;   /* was gold  → now Dragon blue  */
+  --color-gold-light:  #93b8f8;   /* was gold-light → light blue  */
+  --color-gold-dark:   #1040a8;   /* was gold-dark → deep blue    */
+  --color-cream:       #ffffff;   /* was cream → white            */
+  --color-cream-dark:  #f0f4ff;   /* was cream-dark → light blue-grey */
+  --color-ink:         #111827;   /* was ink → near black         */
+  --color-ink-light:   #374151;   /* was ink-light → dark grey    */
+  --color-ink-faint:   #6b7280;   /* was ink-faint → mid grey     */
+  --color-red-china:   #dc2626;   /* keep red for errors          */
+
+  --animate-fade-up: fade-up 0.9s ease forwards;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #ffffff;
+  color: var(--color-ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Remove grain — Dragon Sourcing is clean/corporate */
+.grain-overlay { display: none; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f0f4ff; }
+::-webkit-scrollbar-thumb { background: #93b8f8; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #1a56db; }
+
+/* ─── HERO: split layout (left text, right photo) like Dragon Sourcing ─── */
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 92vh;
+  align-items: center;
+  background: #ffffff;
+  padding-top: 68px;
+}
+@media (max-width: 900px) {
+  .hero-split { grid-template-columns: 1fr; }
+  .hero-right-photo { min-height: 340px; order: -1; }
+}
+.hero-left-text {
+  padding: 60px 60px 60px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media (max-width: 1200px) { .hero-left-text { padding: 48px 40px; } }
+@media (max-width: 900px)  { .hero-left-text { padding: 40px 24px; } }
+
+.hero-right-photo {
+  position: relative;
+  overflow: hidden;
+  min-height: 92vh;
+}
+@media (max-width: 900px) { .hero-right-photo { min-height: 340px; } }
+.hero-right-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+/* ─── ICON STRIP (6 icons below hero) ─── */
+.icon-strip {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+  background: #f8fafc;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+@media (max-width: 900px) { .icon-strip { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 540px) { .icon-strip { grid-template-columns: repeat(2, 1fr); } }
+.icon-strip-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 28px 16px;
+  border-right: 1px solid #e5e7eb;
+  transition: background 0.2s;
+}
+.icon-strip-item:last-child { border-right: none; }
+.icon-strip-item:hover { background: #eff6ff; }
+.icon-strip-icon {
+  width: 44px; height: 44px;
+  background: #eff6ff;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 10px;
+  color: #1a56db;
+  font-size: 1.2rem;
+}
+
+/* ─── SERVICE CARDS WITH IMAGES ─── */
+.svc-img-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+  overflow: hidden;
+  border-radius: 12px;
+}
+@media (max-width: 1024px) { .svc-img-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px)  { .svc-img-grid { grid-template-columns: repeat(2, 1fr); } }
+.svc-img-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.svc-img-item img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+  filter: brightness(0.88);
+}
+.svc-img-item:hover img { transform: scale(1.07); filter: brightness(1); }
+.svc-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(17,24,39,0.75) 0%, transparent 55%);
+  display: flex;
+  align-items: flex-end;
+  padding: 14px;
+}
+.svc-img-label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.03em;
+  line-height: 1.3;
+}
+
+/* ─── SPLIT SECTIONS ─── */
+.split-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 420px;
+}
+@media (max-width: 768px) {
+  .split-section { grid-template-columns: 1fr; }
+  .split-img-col { min-height: 260px; order: -1; }
+}
+.split-img-col {
+  position: relative;
+  overflow: hidden;
+}
+.split-img-col img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform 0.6s ease;
+}
+.split-img-col:hover img { transform: scale(1.04); }
+.split-img-badge {
+  position: absolute;
+  bottom: 20px; left: 20px;
+  background: #1a56db;
+  color: white;
+  padding: 10px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  line-height: 1.4; border-radius: 4px;
+}
+
+/* ─── STATS DARK BAND (like Dragon Sourcing) ─── */
+.stats-band {
+  background: #1e2d4f;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  padding: 48px 0;
+}
+@media (max-width: 900px) { .stats-band { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 540px) { .stats-band { grid-template-columns: repeat(2, 1fr); } }
+.stats-band-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 16px 20px;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.stats-band-item:last-child { border-right: none; }
+.stats-band-icon { font-size: 1.5rem; margin-bottom: 8px; opacity: 0.8; color: white; }
+.stats-band-num {
+  font-family: var(--font-sans);
+  font-size: 1.8rem; font-weight: 800;
+  color: white; line-height: 1;
+}
+.stats-band-label {
+  font-size: 0.72rem; color: rgba(255,255,255,0.5);
+  margin-top: 4px; font-weight: 500;
+}
+
+/* ─── CTA BANNER (dark navy like Dragon Sourcing) ─── */
+.cta-dark-band {
+  background: linear-gradient(135deg, #1e2d4f 0%, #0f1c3a 100%);
+  position: relative;
+  overflow: hidden;
+}
+.cta-dark-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("https://images.unsplash.com/photo-1606765962248-7ff407b51667?w=1920&q=60") center/cover;
+  opacity: 0.07;
+}
+
+/* ─── PHOTO STRIP ─── */
+.photo-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  height: 200px;
+  overflow: hidden;
+}
+@media (max-width: 768px) { .photo-strip { grid-template-columns: repeat(2, 1fr); height: 240px; } }
+.photo-strip-item { position: relative; overflow: hidden; }
+.photo-strip-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  filter: grayscale(15%);
+}
+.photo-strip-item:hover img { transform: scale(1.08); filter: grayscale(0%); }
+.photo-strip-label {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(17,24,39,0.65) 0%, transparent 55%);
+  display: flex; align-items: flex-end; padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+}
+
+/* ─── NAVBAR override ─── */
+/* Keep navbar white/clean like Dragon Sourcing */
+
+/* ─── BLUE BUTTON overrides ─── */
+/* Tailwind classes using gold/ink will now resolve to blue/dark via theme */
+
+/* ─── ACCENT UNDERLINE on nav ─── */
+/* Framer motion indicator uses bg-gold → now blue */
+
+/* ─── TABLE highlight col ─── */
+.bg-blue-highlight { background: rgba(26,86,219,0.05) !important; }
+.border-blue-highlight { border-color: rgba(26,86,219,0.35) !important; }
+
+/* ─── LEARN MORE LINKS ─── */
+.learn-more {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1a56db;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s;
+  margin-top: 0.75rem;
+}
+.learn-more:hover { gap: 8px; }
